@@ -1,21 +1,35 @@
+- user = typeof(udata) != 'undefined' ? udata : {}
+input(type='hidden', value= user.user_id)#userId
+
+//head#navbar.navbar-fixed-top.navbar-inverse.navbar
+div
+    div#navbar.navbar-static-top.navbar.navbar-inner
+        nav
+            ul.pull-right.nav
+                li <a href="/html/">HTML</a>
+                li <a href="/css/">CSS</a>
+                li <a href="/js/">JavaScript</a>
+                li <a href="/jquery/">Logout</a>
+
 #entry-form-container
-    form( method="post",action="").well.span8
+    div.body.well.span8
         h1= title
-        p.subheading Write Something!
-        label Text 
-        textarea(rows="4",style ="width:600px; resize:none;" ,type="text", name="entry_text", id='entry_text-tf').span4.required
-        button(type="submit")#btn-login.btn.btn-primary
-            i.icon-lock.icon-white
+        label Write Something!
+        input(type="date",name="entry_date",id='entry_date-tf')
+        input(type="time",name="entry_time",id='entry_time-tf')
+        input(type="text",name="entry_title",id='entry_title-tf')
+        textarea(rows="4",style ="width:610px; resize:none;" ,type="text", name="entry_text", id='entry_text-tf').span4.required
+        button()#btn-post.btn.btn-primary
+            i.icon-pencil.icon-white
             | Post
         div.clear-fix
 
     div.body#entries.well.span8
-        h1 Entries
-        - for (var i = 0; i < entries.length; i++)
-            hr
-            p= entries[i].text_content
+        h1
 
 script(src='/vendor/jquery.min.js')
 script(src='/vendor/jquery.form.js')
 script(src='/vendor/bootstrap-modal.js')
 script(src='/vendor/bootstrap-transition.js')
+script(src='/js/controllers/entryController.js')
+script(src='/js/views/entry.js')

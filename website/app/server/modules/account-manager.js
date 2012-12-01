@@ -2,7 +2,7 @@
 var bcrypt = require('bcrypt')
 
 var pg = require('pg');
-var conString = "postgres://postgres:nmh12345@127.0.0.1/mhatan";
+var conString = "postgres://journaldb:d5B9LCsg@127.0.0.1:5433/journaldb";
 
 
 var dbPort = '5433';
@@ -38,17 +38,17 @@ module.exports = AM;
 AM.manualLogin = function(email, pass, callback)
 {
 	var query = AM.db.query({
-		text: "SELECT pen_name,password FROM users WHERE users.email = $1",
+		text: "SELECT user_id,pen_name,password FROM users WHERE users.email = $1",
 		values: [email] }
 	,function(err,result){
-		console.log(result);
+		//console.log(result);
 		if(result.rowCount == 0){
 			callback('user-not-found');
 		}else{
 			//bcrypt.compare(pass, result.rows[0].password, function(err, res) {
 				if (result.rows[0].password == pass){
-					console.log('right');
-					callback(null, {email:email,user:result.rows[0].pen_name});
+					//console.log('right');
+					callback(null, {user_id:result.rows[0].user_id,email:email,user:result.rows[0].pen_name});
 				}	else{
 					callback('invalid-password');
 				}
@@ -75,15 +75,15 @@ AM.manualLogin = function(email, pass, callback)
 	// });
 }
 
-AM.addEntry = function(text,callback)
+AM.addEntry = function(user_id,data,callback)
 {
 	AM.db.query("SELECT MAX(entry_id) FROM entries",function(err,result){
 		AM.db.query({
-			text:"INSERT INTO entries VALUES($1, 1, 1, $2,'today', 'now')",
-			values: [result.rows[0].max+1,text]
+			text:"INSERT INTO entries VALUES($1, $2, 'T', $3, $4, 'now')",
+			values: [result.rows[0].max+1,user_id,data.entry_text,data.entry_date+' '+data.entry_time]
 		},function(err,result){ 
 			callback(result);
-			console.log(err);});
+		});
 	});
 }
 
@@ -98,13 +98,13 @@ AM.signup = function(newData, callback)
 	,function(err,result){
 		if (result.rows[0].count != 0){
 			callback('email-taken');
-			console.log('email taken');
+			//console.log('email taken');
 		}	else{
 			AM.saltAndHash(newData.pass, function(hash){
 				//newData.pass = hash;
 				AM.db.query("SELECT MAX(user_id) FROM users",function(err,result){
 					AM.db.query({
-						text:"INSERT INTO users VALUES($1, $2, $3, $4, null,'today', null, null,null)",
+						text:"INSERT INTO users VALUES($1, $2, $3, $4, null,'now', 'now', null)",
 						values: [result.rows[0].max+1,newData.email,newData.pass,newData.user]
 						},function(err,result){ console.log(err);}
 					);
@@ -176,18 +176,40 @@ AM.saltAndHash = function(pass, callback)
 
 AM.getAllRecords = function(callback)
 {
-	var query = AM.db.query( "SELECT email,pen_name,date_joined FROM users",
+	var query = AM.db.query( "SELECT email,pen_name,time_joined FROM users",
 	function(err,result){
+		callback(err,result.rows);
+		});
+};
+
+
+AM.getEntries = function(user_id,callback)
+{
+	var query = AM.db.query( {
+		text : "SELECT * FROM entries WHERE user_id=$1 ORDER BY entry_time DESC",
+		values: [user_id] },
+	function(err,result){
+		//console.log(query);
 		callback(err,result.rows);
 		});
 };
 
 AM.getAllEntries = function(callback)
 {
-	var query = AM.db.query( "SELECT * FROM entries",
+	var query = AM.db.query( "SELECT * FROM entries WHERE user_id=1",
 	function(err,result){
 		callback(err,result.rows);
 		});
+};
+
+AM.deleteEntry = function(id,callback)
+{
+	var query = AM.db.query( {
+		text: "DELETE FROM entries WHERE entry_id=$1",
+		values: [id]},
+	function(err,result){
+		callback(err);
+	});
 };
 
 
