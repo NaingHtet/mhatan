@@ -5,29 +5,36 @@ var EM = require('./modules/email-dispatcher');
 module.exports = function(app) {
 
 	app.get('/home', function(req, res) {
-	//     if (req.session.user == null){
-	// // if user is not logged-in redirect back to login page //
-	//         res.redirect('/');
-	//     }   else{
-		AM.getAllEntries(function(e,udata){
+	    if (req.session.user == null){
+	// if user is not logged-in redirect back to login page //
+	        res.redirect('/');
+	    }   else{
 			res.render('entry', {
 				locals: {
-					title : 'Entry',
-					entries : udata
+					title : 'Welcome! '+req.session.user.user,
+					udata : req.session.user
 				}
 			});
-		});
+		}
 	});
 
-	app.post('/home', function(req, res){
-		if (req.param('entry_text') != undefined) {
-			AM.addEntry(req.param('entry_text'), function(o){
-				if (o){
-					res.redirect('/home');
-				}	else{
-					res.send('error-creating-post', 400);
-				}
-			});
+	app.post('/addEntry', function(req, res){
+		//console.log(req.session.user);
+	    if (req.session.user == null){
+	// if user is not logged-in redirect back to login page //
+	        res.redirect('/');
+	    }   else{
+	    	console.log(req.session.user);
+	    	console.log(req.body);
+			if (req.body.entry_text != undefined) {
+				AM.addEntry(req.session.user.user_id,req.body, function(o){
+					if (o){
+						res.send('ok', 200);	
+					}	else{
+						res.send('error-creating-post', 400);
+					}
+				});
+			}
 		}
 	});
 
@@ -42,7 +49,7 @@ module.exports = function(app) {
 			AM.manualLogin(req.cookies.email, req.cookies.pass, function(e,o){
 				if (o != null){
 				    req.session.user = o;
-					res.redirect('/account');
+					res.redirect('/home');
 				}	else{
 					res.render('login', { locals: { title: 'Hello' }});
 				}
@@ -189,7 +196,32 @@ module.exports = function(app) {
 			res.render('print', { locals: { title : 'Account List', accts : accounts } });
 		})
 	});
+
+	app.post('/entry',function(req,res) {
+		AM.getEntries(req.body.user_id,function(e,edata){
+			if(!e){
+				//console.log(edata);
+				res.contentType('json');
+				res.send(JSON.stringify(edata));
+				//console.log(res);
+				//console.log(edata);
+			}
+			else{
+				console.log(e);
+			}
+		});
+	});
 	
+	app.post('/delentry', function(req, res){
+		AM.deleteEntry(req.body.id, function(e){
+			if (!e){
+				res.send('ok', 200);
+			}	else{
+				res.send('entry not found', 400);
+			}
+	    });
+	});
+
 	// app.post('/delete', function(req, res){
 	// 	AM.delete(req.body.id, function(e, obj){
 	// 		if (!e){
