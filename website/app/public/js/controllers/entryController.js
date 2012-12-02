@@ -44,10 +44,18 @@ function EntryController()
 {
 	this.printData= function(data){
 		var items=[];
-
+		var curday ='';
+		items.push('<div>');
 		for (var i = 0; i < data.length; i++){
-			items.push('<p>'+data[i].entry_time+'<button class="btn btn-mini" onclick="deleteEntry('+data[i].entry_id+')"><i class="icon-remove"></i></button><p>'+data[i].text_content.replace(/\n\r?/g, '<br />') + '</p><hr></p>');
+			var time = data[i].entry_time.split('T');
+			if(time[0]!=curday){
+				items.push('</div><hr><div class="well span8">'+time[0]+'<hr>');
+				curday =time[0];
+			}
+			var btn_html = '<button class="btn btn-mini" onclick="deleteEntry('+data[i].entry_id+')"><i class="icon-remove"></i></button>';
+			items.push('<p>'+time[1].slice(0,5)+btn_html+'<p>'+data[i].text_content.replace(/\n\r?/g, '<br />') + '</p><hr></p>');
 		}
+		items.push('</div>');
 		$('#entries').html(items.join(''));
 	}
 
