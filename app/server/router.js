@@ -239,6 +239,13 @@ module.exports = function(app) {
 	// 	res.redirect('/print');
 	// });
 	
+	app.post('/logout', function(req, res){
+		res.clearCookie('email');
+		res.clearCookie('pass');
+//		req.session.destroy(function(e){ res.send('ok', 200); });
+		req.session.destroy(function(e){ res.redirect('/'); });
+	});
+	
 	app.get('*', function(req, res) { res.render('404', { title: 'Page Not Found'}); });
 
 };
