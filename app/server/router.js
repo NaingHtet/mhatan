@@ -42,7 +42,7 @@ module.exports = function(app) {
 // main login page //
 	app.get('/', function(req, res){
 	// check if the user's credentials are saved in a cookie //
-		if (req.cookies.email == undefined || req.cookies.pass == undefined){
+		if ( req.cookies.email == undefined || req.cookies.pass == undefined){
 			res.render('login', { locals: { title: 'Hello' }});
 		}	else{
 	// attempt automatic login //
@@ -239,11 +239,12 @@ module.exports = function(app) {
 	// 	res.redirect('/print');
 	// });
 	
-	app.post('/logout', function(req, res){
-		res.clearCookie('email');
-		res.clearCookie('pass');
-//		req.session.destroy(function(e){ res.send('ok', 200); });
+	app.get('/logout', function(req, res){
+		//console.log(res.cookies);
+		res.clearCookie('email',{path:'/'});
+		res.clearCookie('pass',{path:'/'});
 		req.session.destroy(function(e){ res.redirect('/'); });
+		//console.log(req.session);
 	});
 	
 	app.get('*', function(req, res) { res.render('404', { title: 'Page Not Found'}); });
