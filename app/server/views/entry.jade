@@ -1,14 +1,7 @@
 - user = typeof(udata) != 'undefined' ? udata : {}
 input(type='hidden', value= user.user_id)#userId
 
-div
-    div#navbar.navbar-static-top.navbar.navbar-inner
-        nav
-            ul.pull-right.nav
-                li <a href="/html/">HTML</a>
-                li <a href="/css/">CSS</a>
-                li <a href="/js/">JavaScript</a>
-                li <a href="/logout/">Logout</a>
+include navbar
 
 #entry-form-container
     div.body.well.span8

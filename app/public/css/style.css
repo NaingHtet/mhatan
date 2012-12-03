@@ -28,9 +28,27 @@ a {
 a:hover {
   background-color: #7a991a;
 }
+#navbar img {
+  width: 10%;
+}
+#greeting-container {
+  width: 1000px;
+  margin: 120px auto auto auto;
+}
+#greeting-container #image {
+  width: 250px;
+  margin: 20px 120px 20px 120px;
+  float: left;
+}
+#greeting-container #image h3 {
+  text-align: center;
+}
+#greeting-container #image p {
+  margin-top: 40px;
+}
 #login-container {
+  float: left;
   width: 340px;
-  margin: 160px auto;
 }
 #login-container label {
   margin: 15px 0 5px 5px;
