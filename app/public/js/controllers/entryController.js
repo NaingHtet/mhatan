@@ -7,7 +7,6 @@ function deleteEntry(entry_id){
 		success: function(data){
 			var ec = new EntryController();
 			ec.fetchData(function(udata){
-				//alert(udata);
  				ec.printData(udata);
 			});
 		},
@@ -47,15 +46,17 @@ function EntryController()
 		var curday ='';
 		items.push('<div>');
 		for (var i = 0; i < data.length; i++){
-			var time = data[i].entry_time.split('T');
+			var time = data[i].entry_time.split(' ');
 			if(time[0]!=curday){
 				items.push('</div><hr><div class="well span8">'+time[0]+'<hr>');
 				curday =time[0];
 			}
+			console.log('test');
 			var btn_html = '<button class="btn btn-mini" onclick="deleteEntry('+data[i].entry_id+')"><i class="icon-remove"></i></button>';
-			items.push('<p>'+time[1].slice(0,5)+btn_html+'<p>'+data[i].text_content.replace(/\n\r?/g, '<br />') + '</p><hr></p>');
+			var title = (data[i].title==null) ?'':'<h6>'+data[i].title +'</h6>';
+			items.push('<p>'+time[1]+btn_html+title+'<p>'+data[i].text_content.replace(/\n\r?/g, '<br />') + '</p><hr></p>');
 		}
-		items.push('</div>');
+		//items.push('</div>');
 		$('#entries').html(items.join(''));
 	}
 

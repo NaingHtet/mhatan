@@ -1,6 +1,4 @@
 
-var bcrypt = require('bcrypt')
-
 var pg = require('pg');
 var conString = "postgres://journaldb:d5B9LCsg@127.0.0.1:5433/journaldb";
 
@@ -79,8 +77,8 @@ AM.addEntry = function(user_id,data,callback)
 {
 	AM.db.query("SELECT MAX(entry_id) FROM entries",function(err,result){
 		AM.db.query({
-			text:"INSERT INTO entries VALUES($1, $2, 'T', $3, $4, 'now')",
-			values: [result.rows[0].max+1,user_id,data.entry_text,data.entry_date+' '+data.entry_time]
+			text:"INSERT INTO entries VALUES($1, $2, 'T', $3, $4, $5, 'now','now')",
+			values: [result.rows[0].max+1,user_id,data.entry_text,data.entry_title,data.entry_date+' '+data.entry_time]
 		},function(err,result){ 
 			callback(result);
 		});
@@ -100,7 +98,7 @@ AM.signup = function(newData, callback)
 			callback('email-taken');
 			//console.log('email taken');
 		}	else{
-			AM.saltAndHash(newData.pass, function(hash){
+			AM.saltAndHash(newData.pass, function(){
 				//newData.pass = hash;
 				AM.db.query("SELECT MAX(user_id) FROM users",function(err,result){
 					AM.db.query({
@@ -150,11 +148,12 @@ AM.signup = function(newData, callback)
 
 AM.saltAndHash = function(pass, callback)
 {
-	bcrypt.genSalt(10, function(err, salt) {
-		bcrypt.hash(pass, salt, function(err, hash) {
-			callback(hash);
-		});
-	});
+	// bcrypt.genSalt(10, function(err, salt) {
+	// 	bcrypt.hash(pass, salt, function(err, hash) {
+	// 		callback(hash);
+	// 	});
+	// });
+	callback();
 }
 
 // AM.delete = function(id, callback)
@@ -186,7 +185,7 @@ AM.getAllRecords = function(callback)
 AM.getEntries = function(user_id,callback)
 {
 	var query = AM.db.query( {
-		text : "SELECT * FROM entries WHERE user_id=$1 ORDER BY entry_time DESC",
+		text : "SELECT entry_type,text_content,title,to_char(entry_time,'MM.DD.YYYY HH12:MIAM') AS entry_time FROM entries WHERE user_id=$1 ORDER BY entry_time DESC",
 		values: [user_id] },
 	function(err,result){
 		//console.log(query);
