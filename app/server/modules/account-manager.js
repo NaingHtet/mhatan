@@ -77,9 +77,14 @@ AM.addEntry = function(user_id,data,callback)
 {
 	AM.db.query("SELECT MAX(entry_id) FROM entries",function(err,result){
 		AM.db.query({
-			text:"INSERT INTO entries VALUES($1, $2, 'T', $3, $4, $5, 'now','now')",
-			values: [result.rows[0].max+1,user_id,data.entry_text,data.entry_title,data.entry_date+' '+data.entry_time]
+			text:"INSERT INTO entries VALUES($1, $2, $6, $3, $4, $5, 'now','now')",
+			values: [result.rows[0].max+1,
+					user_id,data.entry_text,
+					data.entry_title,
+					data.entry_date+' '+data.entry_time,
+					data.entry_type]
 		},function(err,result){ 
+			console.log(err);
 			callback(result);
 		});
 	});
@@ -185,7 +190,7 @@ AM.getAllRecords = function(callback)
 AM.getEntries = function(user_id,callback)
 {
 	var query = AM.db.query( {
-		text : "SELECT entry_type,text_content,title,to_char(entry_time,'MM.DD.YYYY HH12:MIAM') AS entry_time FROM entries WHERE user_id=$1 ORDER BY entry_time DESC",
+		text : "SELECT entry_id,entry_type,text_content,title,to_char(entry_time,'MM.DD.YYYY HH12:MIAM') AS entry_time FROM entries WHERE user_id=$1 ORDER BY entries.entry_time DESC",
 		values: [user_id] },
 	function(err,result){
 		//console.log(query);

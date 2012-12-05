@@ -6,14 +6,27 @@ include navbar
 #entry-form-container
     div.body.well.span8
         h1= title
-        label Write Something!
+        label#entry_prompt Write Something!
         input(type="date",name="entry_date",id='entry_date-tf')
+        input(type="number",name="entry_month",id='entry_month-tf',min='1',max='12',placeholder='Month').hide()
+        input(type="number",name="entry_year",id='entry_year-tf',min='2000',max='3000',placeholder='Year').hide()
         input(type="time",name="entry_time",id='entry_time-tf')
-        input(type="text",name="entry_title",id='entry_title-tf')
-        textarea(rows="4",style ="width:610px; resize:none;" ,type="text", name="entry_text", id='entry_text-tf').span4.required
+        input(type="text",name="entry_title",id='entry_title-tf',placeholder='Title')
+        textarea(rows="4",style ="width:610px; resize:none;" ,type="text", name="entry_text", id='entry_text-tf',placeholder="Today I ...").span4.required
         button()#btn-post.btn.btn-primary
             i.icon-pencil.icon-white
             | Post
+        div#radio_btns
+            | Entry Type:
+            input(type="radio",name="entry_type",value="T",checked)
+            | T
+            input(type="radio",name="entry_type",value="D")
+            | D
+            input(type="radio",name="entry_type",value="M")
+            | M
+            input(type="radio",name="entry_type",value="Y")
+            | Y
+
         div.clear-fix
 
     div.body#entries

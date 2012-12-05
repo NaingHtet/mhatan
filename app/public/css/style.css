@@ -15,6 +15,13 @@ a {
 a:hover {
   background-color: #7a991a;
 }
+#radio_btns {
+  font-weight: small;
+  padding-top: 20px;
+}
+#radio_btns input {
+  margin-left: 8px;
+}
 #navbar {
   min-width: 500px;
 }
@@ -91,15 +98,24 @@ a:hover {
   margin-top: 0px;
 }
 #entry-form-container #entry_date-tf {
-  width: 80px;
+  width: 120px;
+  text-align: center;
 }
 #entry-form-container #entry_time-tf {
   width: 80px;
 }
+#entry-form-container #entry_month-tf {
+  text-align: center;
+  width: 50px;
+}
+#entry-form-container #entry_year-tf {
+  text-align: center;
+  width: 70px;
+}
 #entry-form-container #entry_title-tf {
-  width: 400px;
+  width: 350px;
   float: right;
-  text-align: right;
+  text-align: left;
   font-weight: bold;
 }
 #account-form-container {

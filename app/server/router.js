@@ -200,7 +200,6 @@ module.exports = function(app) {
 	app.post('/entry',function(req,res) {
 		AM.getEntries(req.body.user_id,function(e,edata){
 			if(!e){
-				console.log(edata);
 				res.contentType('json');
 				res.send(JSON.stringify(edata));
 				//console.log(res);
