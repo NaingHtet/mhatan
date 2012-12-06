@@ -83,6 +83,24 @@ AM.addEntry = function(user_id,data,callback)
 					data.entry_title,
 					data.entry_date+' '+data.entry_time,
 					data.entry_type]
+		},function(err,result){
+			console.log(err);
+			callback(result);
+		});
+	});
+}
+
+AM.addDiary = function(user_id,data,callback)
+{
+	AM.db.query("SELECT MAX(diary_id) FROM diary",function(err,result){
+		console.log("max diary id = " + result.rows[0].max);
+		AM.db.query({
+			text:"INSERT INTO diary VALUES($1, $2, $3, $4, $5, null, null, 'now','now')",
+			values: [result.rows[0].max+1,
+					user_id,
+					data.diary_name,
+					data.diary_desc,
+					data.diary_category]
 		},function(err,result){ 
 			console.log(err);
 			callback(result);
@@ -223,7 +241,7 @@ AM.getDiaries = function(user_id,callback)
 		values: [user_id] },
 	function(err,result){
 		callback(err,result.rows);
-		});
+	});
 };
 
 // AM.delAllRecords = function(id, callback)

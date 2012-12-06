@@ -118,6 +118,28 @@ a:hover {
   text-align: left;
   font-weight: bold;
 }
+#diary-form-container {
+  width: 610px;
+  margin: 10px auto auto;
+}
+#diary-form-container label {
+  margin: 15px 0 5px 5px;
+}
+#diary-form-container button {
+  width: 120px;
+  padding: 6px 10px 6px 10px;
+  float: right;
+  margin-top: 10px;
+}
+#diary-form-container #diaries p {
+  word-wrap: break-word;
+  width: 610px;
+}
+#diary-form-container #diaries button {
+  width: 15px;
+  padding: 0 0 0 0;
+  margin-top: 0px;
+}
 #account-form-container {
   width: 460px;
   margin: 100px auto;
