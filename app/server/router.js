@@ -246,6 +246,10 @@ module.exports = function(app) {
 		//console.log(req.session);
 	});
 	
+	app.get('/about', function(req, res){
+		res.render('about', { title: 'About Mhatan'});
+	});
+	
 	app.get('*', function(req, res) { res.render('404', { title: 'Page Not Found'}); });
 
 };
