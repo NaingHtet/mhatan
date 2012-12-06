@@ -221,6 +221,12 @@ module.exports = function(app) {
 	    });
 	});
 
+	app.get('/diary', function(req, res) {
+		AM.getDiaries( req.body.user_id, function(e, data) {
+			res.render('diary', { locals: { title : 'Diary List', diaries : data } });
+		})
+	});
+
 	// app.post('/delete', function(req, res){
 	// 	AM.delete(req.body.id, function(e, obj){
 	// 		if (!e){

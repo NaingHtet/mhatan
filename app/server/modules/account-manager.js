@@ -216,6 +216,15 @@ AM.deleteEntry = function(id,callback)
 	});
 };
 
+AM.getDiaries = function(user_id,callback)
+{
+	var query = AM.db.query( {
+		text: "SELECT * FROM diary WHERE user_id=$1",
+		values: [user_id] },
+	function(err,result){
+		callback(err,result.rows);
+		});
+};
 
 // AM.delAllRecords = function(id, callback)
 // {
