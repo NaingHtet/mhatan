@@ -45,6 +45,25 @@ module.exports = function(app) {
 		}
 	});
 
+	app.post('/diary', function(req, res){
+		//console.log(req.session.user);
+	    if (req.session.user == null){
+	// if user is not logged-in redirect back to login page //
+	        res.redirect('/');
+	    }   else{
+	    	console.log(req.session.user);
+	    	console.log(req.body);
+			if (req.body.diary_name != undefined) {
+				AM.addDiary(req.session.user.user_id,req.body, function(o){
+					if (o){
+						res.send('ok', 200);
+					}	else{
+						res.send('error-creating-diary', 400);
+					}
+				});
+			}
+		}
+	});
 
 // main login page //
 	app.get('/', function(req, res){
@@ -228,6 +247,17 @@ module.exports = function(app) {
 	    });
 	});
 
+	app.get('/diary', function(req, res) {
+		if (req.session.user == null){
+			// if user is not logged-in redirect back to login page //
+			res.redirect('/');
+		} else {
+			AM.getDiaries( req.body.user_id, function(e, data) {
+				res.render('diary', { locals: { title : 'Diary List', diaries : data } });
+			})
+		}
+	});
+
 	// app.post('/delete', function(req, res){
 	// 	AM.delete(req.body.id, function(e, obj){
 	// 		if (!e){
@@ -251,6 +281,10 @@ module.exports = function(app) {
 		res.clearCookie('pass',{path:'/'});
 		req.session.destroy(function(e){ res.redirect('/'); });
 		//console.log(req.session);
+	});
+	
+	app.get('/about', function(req, res){
+		res.render('about', { title: 'About Mhatan'});
 	});
 	
 	app.get('*', function(req, res) { res.render('404', { title: 'Page Not Found'}); });

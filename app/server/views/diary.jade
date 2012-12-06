@@ -1,0 +1,44 @@
+
+include navbar
+
+#diary-form-container
+	div.body.well.span8
+		h1 Diaries
+		form( method="post")#diary-form
+			p.subheading Create a new diary
+			label Name 
+			input(type="text", name="diary_name", id='diary_name-tf').span4.required
+			label Description
+			input(type="text", name="diary_desc", id='diary_desc-tf').span4.required
+			label Category
+			input(type="text", name="diary_category", id='diary_category-tf').span4.required
+			button(type="submit")#btn-post.btn.btn-primary
+				i.icon-pencil.icon-white
+				| Create
+			div.clear-fix
+
+div.container(style='margin:20px')
+	table.table.table-bordered.table-striped
+		thead
+			tr
+				th(style='width:40px') #
+				th(style='width:180px') Name
+				th(style='width:180px') Description
+				th(style='width:180px') Category
+				th(style='width:140px') Display Order
+				th(style='width:180px') Permissions
+				th(style='width:230px') Diary Created
+				th(style='width:230px') Diary Edited
+		tbody
+		- for (var i = 0; i < diaries.length; i++)
+			tr
+				td= i+1
+				td= diaries[i].diary_name
+				td= diaries[i].description
+				td= diaries[i].category
+				td= diaries[i].display_order
+				td= diaries[i].permissions
+				td= diaries[i].time_created
+				td= diaries[i].last_time_edited
+
+script(src='/js/controllers/diaryController.js')
