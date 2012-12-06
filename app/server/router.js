@@ -222,9 +222,14 @@ module.exports = function(app) {
 	});
 
 	app.get('/diary', function(req, res) {
-		AM.getDiaries( req.body.user_id, function(e, data) {
-			res.render('diary', { locals: { title : 'Diary List', diaries : data } });
-		})
+		if (req.session.user == null){
+			// if user is not logged-in redirect back to login page //
+			res.redirect('/');
+		} else {
+			AM.getDiaries( req.body.user_id, function(e, data) {
+				res.render('diary', { locals: { title : 'Diary List', diaries : data } });
+			})
+		}
 	});
 
 	// app.post('/delete', function(req, res){
