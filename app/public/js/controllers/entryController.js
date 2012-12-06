@@ -23,7 +23,7 @@ $('#btn-post').click(function(){
 		e_date = $('#entry_date-tf').val();
 		if( e_type == 'M'){e_date = $('#entry_month-tf').val()+'-31-'+$('#entry_year-tf').val();}
 		if( e_type == 'Y'){e_date = '12-'+'31-'+ $('#entry_year-tf').val();}
-		if( e_type != 'D'){e_time = '23:59';}
+		if( e_type != 'D' && e_type != 'T'){e_time = '23:59';}
 		$.ajax({
 			url: '/addEntry',
 			type: 'POST',
@@ -31,7 +31,8 @@ $('#btn-post').click(function(){
 					entry_date:e_date,
 					entry_time:e_time,
 					entry_text:$('#entry_text-tf').val(),
-					entry_type:e_type},
+					entry_type:e_type,
+					entry_pics:pics},
 			success: function(data){
 				var ec = new EntryController();
 				ec.fetchData(function(udata){
@@ -54,7 +55,7 @@ function EntryController()
 		items.push('<div>');
 		for (var i = 0; i < data.length; i++){
 			var time = data[i].entry_time.split(' ');
-			if(time[0]!=curday){
+			if(time[0]!=curday) {
 				items.push('</div><hr><div class="well span8">'+time[0]+'<hr>');
 				curday =time[0];
 			}

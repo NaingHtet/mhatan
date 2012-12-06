@@ -1,5 +1,6 @@
 $(document).ready(function(){
 	var ec = new EntryController();
+	var pc = new PicController();
 	
 	ec.fetchData(function(data){
 		ec.printData(data);
@@ -8,6 +9,17 @@ $(document).ready(function(){
 	$('input[name="entry_type"]:radio').change(function(){
 		changeType($('input[name="entry_type"]:checked').val());
 	});
+
+	$('#btn-pic').click(function(){
+		$('#add-pictures').modal("show");
+		//$('#add-pictures').show();
+	});
+
+	$('#add-btn').click(function(){
+		pc.addPic($('#imgurl-tf').val());
+		printPic();
+	});
+
 
 })
 
