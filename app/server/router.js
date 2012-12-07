@@ -157,6 +157,7 @@ module.exports = function(app) {
 			if (e){
 				res.send(e, 400);
 			}	else{
+				console.log('done creating');
 				res.send('ok', 200);
 			}
 		});
@@ -287,7 +288,6 @@ module.exports = function(app) {
 	app.post('/prevyearentry',function(req,res) {
 		AM.getPrevYearEntries(req.body.day,req.body.user_id,function(e,edata){
 			if(!e){
-				console.log(edata);
 				res.contentType('json');
 				res.send(JSON.stringify(edata));
 			}

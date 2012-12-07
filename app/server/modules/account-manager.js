@@ -150,15 +150,15 @@ AM.signup = function(newData, callback)
 	,function(err,result){
 		if (result.rows[0].count != 0){
 			callback('email-taken');
-			//console.log('email taken');
 		}	else{
 			AM.saltAndHash(newData.pass, function(){
-				//newData.pass = hash;
 				AM.db.query("SELECT MAX(user_id) FROM users",function(err,result){
 					AM.db.query({
-						text:"INSERT INTO users VALUES($1, $2, $3, $4, null,'now', 'now', null)",
+						text:"INSERT INTO users VALUES($1, $2, $3, $4, null,null,'now', 'now')",
 						values: [result.rows[0].max+1,newData.email,newData.pass,newData.user]
-						},function(err,result){ console.log(err);}
+						},function(err,result){ 
+							console.log(err);
+							callback(err,result)}
 					);
 				});
 			});
