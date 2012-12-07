@@ -1,7 +1,6 @@
 $(document).ready(function(){
 	var ec = new EntryController();
 	var pc = new PicController();
-	
 	ec.fetchData('/prevdayentry','tomorrow',function(data){
 		if(data == ''){
 			ec.fetchData('/nextdayentry','yesterday',function(data){

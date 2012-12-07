@@ -20,24 +20,81 @@ function deleteEntry(entry_id){
 		data: { id: entry_id },
 		success: function(data){
 			var ec = new EntryController();
-			var curday = $('#currentday').html().split('.');
-			curday[1]++;
-			ec.fetchData('/prevdayentry',curday.join(','),function(udata){
- 				ec.printData_day(udata);
-			});
+			updateAllTabs();
 		},
 		error: function(jqXHR){
 			alert(jqXHR.responseText+' :: '+jqXHR.statusText);
 		}
 	});
 }
+function updateAllTabs(){
+	var ec = new EntryController();
+
+	if($('#currentday').html()!= null){
+		var curday = $('#currentday').html().split('.');
+		if(curday[1]==31){
+			curday[1]=1;
+			if(curday[0]==12){curday[0]=1;curday[2]++;}else{curday[2]++;}
+		}else{curday[1]++;}
+		ec.fetchData('/prevdayentry',curday.join(','),function(udata){
+			if(udata == ''){
+				ec.fetchData('/nextdayentry',curday.join(','),function(data){
+					if(data == ''){
+						$('#entries_day').html('No entries. Please write some entries first.');
+					}else{
+						ec.printData_day(data);
+					}
+				});
+			}else{
+				ec.printData_day(udata);
+			}
+	 	});
+	}
+	if($('#currentmonth').html()!=null){
+		var curmonth = $('#currentmonth').html().split('.');
+		if(curmonth[0]==12){
+			curmonth[0]=1;
+			curmonth[2]++;
+		}else{curmonth[0]++;}
+		ec.fetchData('/prevmonthentry',curmonth.join(','),function(udata){
+			if(udata ==''){
+				ec.fetchData('/nextmonthentry',curmonth.join(','),function(data){
+					if(data==''){
+						$('#entries_month').html('No entries. Please write some entries first.');
+					}else{
+						ec.printData_month(data);
+					}
+				});
+			}else{
+				ec.printData_month(udata);
+			}
+		});
+	}
+	if($('#currentyear').html()!=null){
+		var curyear = $('#currentyear').html().split('.');
+		curyear[2]++;
+		ec.fetchData('/prevyearentry',curyear.join(','),function(udata){
+			if(udata == ''){
+				ec.fetchData('/nextyearentry',curyear.join(','),function(data){
+					if(data==''){
+						$('#entries_year').html('No entries. Please write some entries first.');
+					}else{
+						ec.printData_year(data);
+					}
+				});
+			}else{
+				ec.printData_year(udata);
+			}
+		});
+	}
+}
 $('#btn-post').click(function(){
 	if($('#entry_text-tf').val()!=''){
 		e_type = $('input[name="entry_type"]:checked').val();
 		e_time = $('#entry_time-tf').val();
 		e_date = $('#entry_date-tf').val();
-		if( e_type == 'M'){e_date = $('#entry_month-tf').val()+'-31-'+$('#entry_year-tf').val();}
-		if( e_type == 'Y'){e_date = '12-'+'31-'+ $('#entry_year-tf').val();}
+		if( e_type == 'M'){e_date = $('#entry_year-tf').val()+'-'+$('#entry_month-tf').val()+'-31';}
+		if( e_type == 'Y'){e_date = $('#entry_year-tf').val()+'-12-31';}
 		if( e_type != 'T'){e_time = '23:59';}
 		$.ajax({
 			url: '/addEntry',
@@ -55,6 +112,25 @@ $('#btn-post').click(function(){
 					curday[2]++;
 					ec.fetchData('/prevdayentry',curday.join('-'),function(udata){
  						ec.printData_day(udata);
+						$('#tabs a:first').tab('show');
+					});
+				}
+				if(e_type =='D' || e_type == 'M'){
+					var curday = e_date.split('-');
+					if(curday[1]==12){
+						curday[1]=1;
+						curday[0]++;
+					}else{curday[1]++;}
+					ec.fetchData('/prevmonthentry',curday[0]+'-'+curday[1]+'-01',function(udata){
+ 						ec.printData_month(udata);
+					});
+				}
+				if(e_type =='Y' || e_type == 'M'){
+					var curday = e_date.split('-');
+					curday[0]++;
+					ec.fetchData('/prevmonthentry',curday[0]+'-01-01',function(udata){
+ 						ec.printData_year(udata);
+ 						$('#tabs a:last').tab('show');
 					});
 				}
 			},
@@ -176,6 +252,5 @@ function EntryController()
 		$('#entries_year').html(items.join(''));
 		$('#entries_year').focus();
 	}
-
 
 }

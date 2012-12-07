@@ -55,7 +55,7 @@ module.exports = function(app) {
 			if (req.body.diary_name != undefined) {
 				AM.addDiary(req.session.user.user_id,req.body, function(o){
 					if (o){
-						res.send('ok', 200);
+						res.redirect('/diary');
 					}	else{
 						res.send('error-creating-diary', 400);
 					}

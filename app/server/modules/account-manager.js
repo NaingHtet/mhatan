@@ -326,6 +326,8 @@ AM.deleteEntry = function(id,callback)
 		text: "DELETE FROM entries WHERE entry_id=$1",
 		values: [id]},
 	function(err,result){
+		console.log(id);
+		console.log(err);
 		callback(err);
 	});
 };
