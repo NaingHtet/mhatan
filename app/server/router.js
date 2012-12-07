@@ -24,11 +24,18 @@ module.exports = function(app) {
 	// if user is not logged-in redirect back to login page //
 	        res.redirect('/');
 	    }   else{
-	    	console.log(req.session.user);
+	    	//console.log(req.session.user);
 	    	console.log(req.body);
 			if (req.body.entry_text != undefined) {
-				AM.addEntry(req.session.user.user_id,req.body, function(o){
+				AM.addEntry(req.session.user.user_id,req.body, function(o,entry_id){
 					if (o){
+						if(req.body.entry_pics != undefined){
+							AM.addPics(req.session.user.user_id,req.body.entry_pics,entry_id,function(o){
+								if(o){
+									res.send('ok',200);
+								}
+							});
+						}
 						res.send('ok', 200);	
 					}	else{
 						res.send('error-creating-post', 400);

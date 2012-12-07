@@ -1,0 +1,17 @@
+
+#add-pictures.modal.hide.fade
+    div.modal-header
+        button.close(data-dismiss='modal') x
+        h3 Add pictures
+    div.modal-body
+        #add-pictures-form.well.span5
+            p Please enter the url of the picture you want to add
+            input(type="url", name="imgurl", id='imgurl-tf').span5.required
+            button(type="submit")#add-btn.btn.btn-primary Add
+            button(data-dismiss="modal")#cancel.btn Done
+            div.alert.alert-error.hide
+            button(data-dismiss="alert").close
+        div
+            h3 Pictures Added
+            #url_list
+    div.modal-footer

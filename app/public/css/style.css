@@ -87,6 +87,7 @@ a:hover {
   padding: 6px 10px 6px 10px;
   float: right;
   margin-top: 10px;
+  margin-left: 10px;
 }
 #entry-form-container #entries p {
   word-wrap: break-word;
@@ -153,6 +154,21 @@ a:hover {
   -moz-text-shadow: -1px 1px 0 #fff;
   -webkit-text-shadow: -1px 1px 0 #fff;
   color: #d8000c;
+}
+#add-pictures {
+  width: 452px;
+  margin: -200px 0 0 -232px;
+}
+#add-pictures img {
+  height: 50px;
+  max-width: 200px;
+  float: left;
+  margin: 5px 5px 5px 5px;
+}
+#add-pictures #url_list button {
+  margin-left: -10px;
+  float: left;
+  border: none 0;
 }
 .modal-single-input {
   width: 452px;

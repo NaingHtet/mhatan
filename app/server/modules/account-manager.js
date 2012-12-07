@@ -76,9 +76,10 @@ AM.manualLogin = function(email, pass, callback)
 AM.addEntry = function(user_id,data,callback)
 {
 	AM.db.query("SELECT MAX(entry_id) FROM entries",function(err,result){
+		var entryid= result.rows[0].max+1;
 		AM.db.query({
 			text:"INSERT INTO entries VALUES($1, $2, $6, $3, $4, $5, 'now','now')",
-			values: [result.rows[0].max+1,
+			values: [entryid,
 					user_id,data.entry_text,
 					data.entry_title,
 					data.entry_date+' '+data.entry_time,
@@ -103,9 +104,39 @@ AM.addDiary = function(user_id,data,callback)
 					data.diary_category]
 		},function(err,result){ 
 			console.log(err);
-			callback(result);
+			callback(result,entryid);
 		});
 	});
+}
+
+AM.addPics = function(user_id,pics,entry_id,callback)
+{
+	function picQueries(i){
+		AM.db.query("SELECT MAX(media_id) FROM media_file",function(err,result){
+		 	var file_id = result.rows[0].max+1;
+			// console.log(x);
+			// console.log(pics[x]);
+		 	AM.db.query({
+				text:"INSERT INTO media_file VALUES($1, $2, null, $3, 'P','now')",
+				values: [file_id,pics[i].pic_url,user_id]
+			},function(err,result){
+				console.log(err);
+				if(!err){
+					AM.db.query({
+						text:"INSERT INTO embeds VALUES($1,$2,null)",
+						values: [entry_id,file_id]
+					},function(err,result){
+						if( i+1 == pics.length){
+							callback(result);
+						}else{
+							picQueries(i+1);
+						}
+					});
+				}
+			});
+		});
+	}
+	picQueries(0)
 }
 
 // record insertion, update & deletion methods //

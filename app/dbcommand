@@ -1,0 +1,10 @@
+SELECT * FROM (Select * from entries where entries.user_id=101 AND (entry_type='T' OR entry_type='D') AND 
+date_trunc('day',entry_time)= date_trunc('day', (
+SELECT MIN(entry_time)
+FROM entries
+WHERE date_trunc('day',entry_time) > '2012-12-31'
+)
+)
+ORDER By entry_time) AS entrieslist
+LEFT OUTER JOIN
+(SELECT entry_id,array_agg(media_file_url) as pic_list from embeds,media_file where user_id=101 AND embeds.media_id=media_file.media_id GROUP BY entry_id) AS pics ON entrieslist.entry_id = pics.entry_id;
