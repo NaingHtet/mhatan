@@ -18,6 +18,7 @@ module.exports = function(app) {
 		}
 	});
 
+
 	app.post('/addEntry', function(req, res){
 		//console.log(req.session.user);
 	    if (req.session.user == null){
@@ -236,6 +237,80 @@ module.exports = function(app) {
 			}
 		});
 	});
+	app.post('/prevdayentry',function(req,res) {
+		AM.getPrevDayEntries(req.body.day,req.body.user_id,function(e,edata){
+			console.log(req.body);
+			if(!e){
+				console.log(edata);
+				res.contentType('json');
+				res.send(JSON.stringify(edata));
+			}
+			else{
+				console.log(e);
+			}
+		});
+	});
+	app.post('/nextdayentry',function(req,res) {
+		AM.getNextDayEntries(req.body.day,req.body.user_id,function(e,edata){
+			if(!e){
+				console.log(edata);
+				res.contentType('json');
+				res.send(JSON.stringify(edata));
+			}
+			else{
+				console.log(e);
+			}
+		});
+	});
+	app.post('/prevmonthentry',function(req,res) {
+		AM.getPrevMonthEntries(req.body.day,req.body.user_id,function(e,edata){
+			if(!e){
+				console.log(edata);
+				res.contentType('json');
+				res.send(JSON.stringify(edata));
+			}
+			else{
+				console.log(e);
+			}
+		});
+	});
+	app.post('/nextmonthentry',function(req,res) {
+		AM.getNextMonthEntries(req.body.day,req.body.user_id,function(e,edata){
+			if(!e){
+				console.log(edata);
+				res.contentType('json');
+				res.send(JSON.stringify(edata));
+			}
+			else{
+				console.log(e);
+			}
+		});
+	});
+	app.post('/prevyearentry',function(req,res) {
+		AM.getPrevYearEntries(req.body.day,req.body.user_id,function(e,edata){
+			if(!e){
+				console.log(edata);
+				res.contentType('json');
+				res.send(JSON.stringify(edata));
+			}
+			else{
+				console.log(e);
+			}
+		});
+	});
+	app.post('/nextyearentry',function(req,res) {
+		AM.getNextYearEntries(req.body.day,req.body.user_id,function(e,edata){
+			if(!e){
+				console.log(edata);
+				res.contentType('json');
+				res.send(JSON.stringify(edata));
+			}
+			else{
+				console.log(e);
+			}
+		});
+	});
+
 	
 	app.post('/delentry', function(req, res){
 		AM.deleteEntry(req.body.id, function(e){

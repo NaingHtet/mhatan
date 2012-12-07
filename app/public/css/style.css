@@ -89,14 +89,32 @@ a:hover {
   margin-top: 10px;
   margin-left: 10px;
 }
-#entry-form-container #entries p {
+#entry-form-container #entries h2,
+#entry-form-container #entries_month h2,
+#entry-form-container #entries_year h2 {
+  text-align: center;
+}
+#entry-form-container #entries h3,
+#entry-form-container #entries_month h3,
+#entry-form-container #entries_year h3 {
+  text-align: center;
+}
+#entry-form-container #entries p,
+#entry-form-container #entries_month p,
+#entry-form-container #entries_year p {
   word-wrap: break-word;
   width: 610px;
+  text-indent: 65px;
 }
-#entry-form-container #entries button {
+#entry-form-container #entries button,
+#entry-form-container #entries_month button,
+#entry-form-container #entries_year button {
   width: 15px;
   padding: 0 0 0 0;
   margin-top: 0px;
+}
+#entry-form-container #entriesmode {
+  width: 660px;
 }
 #entry-form-container #entry_date-tf {
   width: 120px;
@@ -154,6 +172,16 @@ a:hover {
   -moz-text-shadow: -1px 1px 0 #fff;
   -webkit-text-shadow: -1px 1px 0 #fff;
   color: #d8000c;
+}
+.pictures {
+  max-height: 160px;
+  overflow: auto;
+}
+.pictures img {
+  height: 100px;
+  max-width: 200px;
+  float: left;
+  margin: 5px 5px 5px 5px;
 }
 #add-pictures {
   width: 452px;

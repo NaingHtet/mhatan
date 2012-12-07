@@ -98,16 +98,26 @@ a:hover{
 		margin-top 10px
 		margin-left 10px
 	}
-	#entries{
+	#entries,#entries_month,#entries_year{
+		h2{
+			text-align center
+		}
+		h3{
+			text-align center
+		}
 		p{
 			word-wrap break-word
 			width 610px
+			text-indent 65px
 		}
 		button{
 			width 15px
 			padding 0 0 0 0
 			margin-top 0px
 		}
+	}
+	#entriesmode{
+		width 660px
 	}
 	#entry_date-tf{
 		width 120px
@@ -171,6 +181,16 @@ a:hover{
 
 // retrieve password window //
 
+.pictures{
+	max-height 160px
+	overflow auto
+	img{
+		height 100px
+		max-width 200px
+		float left
+		margin 5px 5px 5px 5px
+	}
+}
 #add-pictures{
 	width 452px
 	margin -200px 0 0 -232px

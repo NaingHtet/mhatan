@@ -2,8 +2,14 @@ $(document).ready(function(){
 	var ec = new EntryController();
 	var pc = new PicController();
 	
-	ec.fetchData(function(data){
-		ec.printData(data);
+	ec.fetchData('/prevdayentry','tomorrow',function(data){
+		ec.printData_day(data);
+	});
+	ec.fetchData('/prevmonthentry','today',function(data){
+		ec.printData_month(data);
+	});
+	ec.fetchData('/prevyearentry','today',function(data){
+		ec.printData_year(data);
 	});
 
 	$('input[name="entry_type"]:radio').change(function(){
@@ -18,6 +24,40 @@ $(document).ready(function(){
 	$('#add-btn').click(function(){
 		pc.addPic($('#imgurl-tf').val());
 		printPic();
+	});
+
+	$('#prevday').click(function(){
+		ec.fetchData('/prevdayentry',$('#currentday').html(),function(data){
+			ec.printData_day(data);
+		});
+	});
+
+	$('#nextday').click(function(){
+		ec.fetchData('/nextdayentry',$('#currentday').html(),function(data){
+			ec.printData_day(data);
+		});
+	});
+	$('#prevmonth').click(function(){
+		ec.fetchData('/prevmonthentry',$('#currentmonth').html(),function(data){
+			ec.printData_month(data);
+		});
+	});
+
+	$('#nextmonth').click(function(){
+		ec.fetchData('/nextmonthentry',$('#currentmonth').html(),function(data){
+			ec.printData_month(data);
+		});
+	});
+	$('#prevyear').click(function(){
+		ec.fetchData('/prevyearentry',$('#currentyear').html(),function(data){
+			ec.printData_year(data);
+		});
+	});
+
+	$('#nextyear').click(function(){
+		ec.fetchData('/nextyearentry',$('#currentyear').html(),function(data){
+			ec.printData_year(data);
+		});
 	});
 
 

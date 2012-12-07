@@ -31,14 +31,52 @@ include navbar
             | Y
 
         div.clear-fix
-
-    div.body#entries
+    div#entriesmode.tabbable
+        ul.nav.nav-tabs
+            li.active
+                a(href="#tab1",data-toggle="tab")
+                    | Daily Entries
+            li
+                a(href="#tab2",data-toggle="tab")
+                    | Monthly Entries
+            li
+                a(href="#tab3",data-toggle="tab")
+                    | Yearly Entries
+        div.tab-content
+            div#tab1.tab-pane.active
+                ul.pager
+                    li#prevday.previous
+                        a(href="#")
+                            |&larr; Previous Day
+                    li#nextday.next(style="float:right")
+                        a(href="#")
+                            |Next Day &rarr;
+                div.body.well.entries#entries
+            div#tab2.tab-pane
+                ul.pager
+                    li#prevmonth.previous
+                        a(href="#")
+                            |&larr; Previous Month
+                    li#nextmonth.next(style="float:right")
+                        a(href="#")
+                            |Next Month &rarr;
+                div.body.well.entries#entries_month
+            div#tab3.tab-pane
+                ul.pager
+                    li#prevyear.previous
+                        a(href="#")
+                            |&larr; Previous Year
+                    li#nextyear.next(style="float:right")
+                        a(href="#")
+                            |Next Year &rarr;
+                div.body.well.entries#entries_year
 
 include modals/add-pictures
 script(src='/vendor/jquery.min.js')
 script(src='/vendor/jquery.form.js')
 script(src='/vendor/bootstrap-modal.js')
 script(src='/vendor/bootstrap-transition.js')
+script(src='/vendor/bootstrap-tab.js')
 script(src='/js/controllers/entryController.js')
 script(src='/js/controllers/picController.js')
 script(src='/js/views/entry.js')

@@ -86,7 +86,7 @@ AM.addEntry = function(user_id,data,callback)
 					data.entry_type]
 		},function(err,result){
 			console.log(err);
-			callback(result);
+			callback(result,entryid);
 		});
 	});
 }
@@ -121,11 +121,15 @@ AM.addPics = function(user_id,pics,entry_id,callback)
 				values: [file_id,pics[i].pic_url,user_id]
 			},function(err,result){
 				console.log(err);
+				console.log('mf res is '+result);
 				if(!err){
+					console.log('eid is '+entry_id);
+					console.log('fileid is '+file_id);
 					AM.db.query({
 						text:"INSERT INTO embeds VALUES($1,$2,null)",
 						values: [entry_id,file_id]
 					},function(err,result){
+						console.log('res is '+result);
 						if( i+1 == pics.length){
 							callback(result);
 						}else{
@@ -246,6 +250,71 @@ AM.getEntries = function(user_id,callback)
 		callback(err,result.rows);
 		});
 };
+AM.getNextDayEntries = function(day,user_id,callback)
+{
+	var query = AM.db.query( {
+	text:"SELECT entrieslist.*,pics.pic_list FROM (Select entry_id,entry_type,text_content,title,to_char(entry_time,'MM.DD.YYYY HH12:MIAM') AS entry_time from entries where entries.user_id=$1 AND (entry_type='T' OR entry_type='D') AND date_trunc('day',entry_time)= date_trunc('day', (SELECT MIN(entry_time) FROM entries WHERE date_trunc('day',entry_time)> $2)) ORDER By entries.entry_time ASC) AS entrieslist LEFT OUTER JOIN (SELECT entry_id,array_agg(media_file_url) as pic_list from embeds,media_file where user_id=$1 AND embeds.media_id=media_file.media_id GROUP BY entry_id) AS pics ON entrieslist.entry_id = pics.entry_id;",
+	values: [user_id,day] },
+	function(err,result){
+		console.log(err);
+		callback(err,result.rows);
+	});
+};
+
+AM.getPrevDayEntries = function(day,user_id,callback)
+{
+	var query = AM.db.query( {
+	text:"SELECT entrieslist.*,pics.pic_list FROM (Select entry_id,entry_type,text_content,title,to_char(entry_time,'MM.DD.YYYY HH12:MIAM') AS entry_time from entries where entries.user_id=$1 AND (entry_type='T' OR entry_type='D') AND date_trunc('day',entry_time)= date_trunc('day', (SELECT MAX(entry_time) FROM entries WHERE date_trunc('day',entry_time)< $2)) ORDER By entries.entry_time ASC) AS entrieslist LEFT OUTER JOIN (SELECT entry_id,array_agg(media_file_url) as pic_list from embeds,media_file where user_id=$1 AND embeds.media_id=media_file.media_id GROUP BY entry_id) AS pics ON entrieslist.entry_id = pics.entry_id;",
+	values: [user_id,day] },
+	function(err,result){
+		console.log(err);
+		callback(err,result.rows);
+	});
+};
+
+AM.getPrevMonthEntries = function(day,user_id,callback)
+{
+	var query = AM.db.query( {
+	text:"SELECT entrieslist.*,pics.pic_list FROM (Select entry_id,entry_type,text_content,title,to_char(entry_time,'MM.DD.YYYY HH12:MIAM') AS entry_time from entries where entries.user_id=$1 AND (entry_type='M' OR entry_type='D') AND date_trunc('month',entry_time)= date_trunc('month', (SELECT MAX(entry_time) FROM entries WHERE date_trunc('month',entry_time)< $2)) ORDER By entries.entry_time ASC) AS entrieslist LEFT OUTER JOIN (SELECT entry_id,array_agg(media_file_url) as pic_list from embeds,media_file where user_id=$1 AND embeds.media_id=media_file.media_id GROUP BY entry_id) AS pics ON entrieslist.entry_id = pics.entry_id;",
+	values: [user_id,day] },
+	function(err,result){
+		console.log(err);
+		callback(err,result.rows);
+	});
+};
+AM.getNextMonthEntries = function(day,user_id,callback)
+{
+	var query = AM.db.query( {
+	text:"SELECT entrieslist.*,pics.pic_list FROM (Select entry_id,entry_type,text_content,title,to_char(entry_time,'MM.DD.YYYY HH12:MIAM') AS entry_time from entries where entries.user_id=$1 AND (entry_type='M' OR entry_type='D') AND date_trunc('month',entry_time)= date_trunc('month', (SELECT MIN(entry_time) FROM entries WHERE date_trunc('month',entry_time)> $2)) ORDER By entries.entry_time ASC) AS entrieslist LEFT OUTER JOIN (SELECT entry_id,array_agg(media_file_url) as pic_list from embeds,media_file where user_id=$1 AND embeds.media_id=media_file.media_id GROUP BY entry_id) AS pics ON entrieslist.entry_id = pics.entry_id;",
+	values: [user_id,day] },
+	function(err,result){
+		console.log(err);
+		callback(err,result.rows);
+	});
+};
+AM.getPrevYearEntries = function(day,user_id,callback)
+{
+	var query = AM.db.query( {
+	text:"SELECT entrieslist.*,pics.pic_list FROM (Select entry_id,entry_type,text_content,title,to_char(entry_time,'MM.DD.YYYY HH12:MIAM') AS entry_time from entries where entries.user_id=$1 AND (entry_type='M' OR entry_type='Y') AND date_trunc('year',entry_time)= date_trunc('year', (SELECT MAX(entry_time) FROM entries WHERE date_trunc('year',entry_time)< $2)) ORDER By entries.entry_time ASC) AS entrieslist LEFT OUTER JOIN (SELECT entry_id,array_agg(media_file_url) as pic_list from embeds,media_file where user_id=$1 AND embeds.media_id=media_file.media_id GROUP BY entry_id) AS pics ON entrieslist.entry_id = pics.entry_id;",
+	values: [user_id,day] },
+	function(err,result){
+		console.log(err);
+		callback(err,result.rows);
+	});
+};
+AM.getNextYearEntries = function(day,user_id,callback)
+{
+	var query = AM.db.query( {
+	text:"SELECT entrieslist.*,pics.pic_list FROM (Select entry_id,entry_type,text_content,title,to_char(entry_time,'MM.DD.YYYY HH12:MIAM') AS entry_time from entries where entries.user_id=$1 AND (entry_type='M' OR entry_type='Y') AND date_trunc('year',entry_time)= date_trunc('year', (SELECT MIN(entry_time) FROM entries WHERE date_trunc('year',entry_time)> $2)) ORDER By entries.entry_time ASC) AS entrieslist LEFT OUTER JOIN (SELECT entry_id,array_agg(media_file_url) as pic_list from embeds,media_file where user_id=$1 AND embeds.media_id=media_file.media_id GROUP BY entry_id) AS pics ON entrieslist.entry_id = pics.entry_id;",
+	values: [user_id,day] },
+	function(err,result){
+		console.log(err);
+		callback(err,result.rows);
+	});
+};
+
+
+
 
 AM.getAllEntries = function(callback)
 {
