@@ -52,8 +52,6 @@ module.exports = function(app) {
 	// if user is not logged-in redirect back to login page //
 	        res.redirect('/');
 	    }   else{
-	    	console.log(req.session.user);
-	    	console.log(req.body);
 			if (req.body.diary_name != undefined) {
 				AM.addDiary(req.session.user.user_id,req.body, function(o){
 					if (o){

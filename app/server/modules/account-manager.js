@@ -93,19 +93,15 @@ AM.addEntry = function(user_id,data,callback)
 
 AM.addDiary = function(user_id,data,callback)
 {
-	AM.db.query("SELECT MAX(diary_id) FROM diary",function(err,result){
-		console.log("max diary id = " + result.rows[0].max);
-		AM.db.query({
-			text:"INSERT INTO diary VALUES($1, $2, $3, $4, $5, null, null, 'now','now')",
-			values: [result.rows[0].max+1,
-					user_id,
-					data.diary_name,
-					data.diary_desc,
-					data.diary_category]
-		},function(err,result){ 
-			console.log(err);
-			callback(result,entryid);
-		});
+	AM.db.query({
+		text:"INSERT INTO diary VALUES(null, $1, $2, $3, $4, null, null, 'now','now')",
+		values: [user_id,
+				data.diary_name,
+				data.diary_desc,
+				data.diary_category]
+	},function(err,result){ 
+		console.log(err);
+		callback(result);
 	});
 }
 
