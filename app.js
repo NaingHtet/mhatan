@@ -1,10 +1,11 @@
-
 /**
- * Node.js Login Boilerplate
- * Author : Stephen Braitsch
- * More Info : http://bit.ly/LsODY8
+ * Mhatan main file
+ * Author : Naing Minn Htet
  */
 
+/**
+ * Code Credit : This is based on the login framework on node-login.braitsch.io .
+ */
 var exp = require('express');
 var app = exp.createServer();
 

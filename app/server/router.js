@@ -275,7 +275,7 @@ module.exports = function(app) {
 	app.post('/nextmonthentry',function(req,res) {
 		AM.getNextMonthEntries(req.body.day,req.body.user_id,function(e,edata){
 			if(!e){
-				console.log(edata);
+				//console.log(edata);
 				res.contentType('json');
 				res.send(JSON.stringify(edata));
 			}

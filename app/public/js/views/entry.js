@@ -3,13 +3,43 @@ $(document).ready(function(){
 	var pc = new PicController();
 	
 	ec.fetchData('/prevdayentry','tomorrow',function(data){
-		ec.printData_day(data);
+		if(data == ''){
+			ec.fetchData('/nextdayentry','yesterday',function(data){
+				if(data == ''){
+					$('#entries_day').html('No entries. Please write some entries first.');
+				}else{
+					ec.printData_day(data);
+				}
+			});
+		}else{
+			ec.printData_day(data);
+		}
 	});
 	ec.fetchData('/prevmonthentry','today',function(data){
-		ec.printData_month(data);
+		if(data ==''){
+			ec.fetchData('/nextmonthentry','today',function(data){
+				if(data==''){
+					$('#entries_month').html('No entries. Please write some entries first.');
+				}else{
+					ec.printData_month(data);
+				}
+			});
+		}else{
+			ec.printData_month(data);
+		}
 	});
 	ec.fetchData('/prevyearentry','today',function(data){
-		ec.printData_year(data);
+		if(data == ''){
+			ec.fetchData('/nextyearentry','today',function(data){
+				if(data==''){
+					$('#entries_year').html('No entries. Please write some entries first.');
+				}else{
+					ec.printData_year(data);
+				}
+			});
+		}else{
+			ec.printData_year(data);
+		}
 	});
 
 	$('input[name="entry_type"]:radio').change(function(){
@@ -28,35 +58,59 @@ $(document).ready(function(){
 
 	$('#prevday').click(function(){
 		ec.fetchData('/prevdayentry',$('#currentday').html(),function(data){
-			ec.printData_day(data);
+			if(!data){
+				$('#entries').html('No entries. Please write some entries first.');
+			}else{
+				ec.printData_day(data);
+			}
 		});
 	});
 
 	$('#nextday').click(function(){
 		ec.fetchData('/nextdayentry',$('#currentday').html(),function(data){
-			ec.printData_day(data);
+			if(!data){
+				$('#entries_day').html('No entries. Please write some entries first.');
+			}else{
+				ec.printData_day(data);
+			}
 		});
 	});
 	$('#prevmonth').click(function(){
 		ec.fetchData('/prevmonthentry',$('#currentmonth').html(),function(data){
-			ec.printData_month(data);
+			if(!data){
+				$('#entries_month').html('No entries. Please write some entries first.');
+			}else{
+				ec.printData_month(data);
+			}
 		});
 	});
 
 	$('#nextmonth').click(function(){
 		ec.fetchData('/nextmonthentry',$('#currentmonth').html(),function(data){
-			ec.printData_month(data);
+			if(!data){
+				$('#entries_month').html('No entries. Please write some entries first.');
+			}else{
+				ec.printData_month(data);
+			}
 		});
 	});
 	$('#prevyear').click(function(){
 		ec.fetchData('/prevyearentry',$('#currentyear').html(),function(data){
-			ec.printData_year(data);
+			if(!data){
+				$('#entries_year').html('No entries. Please write some entries first.');
+			}else{
+				ec.printData_year(data);
+			}
 		});
 	});
 
 	$('#nextyear').click(function(){
 		ec.fetchData('/nextyearentry',$('#currentyear').html(),function(data){
-			ec.printData_year(data);
+			if(!data){
+				$('#entries_year').html('No entries. Please write some entries first.');
+			}else{
+				ec.printData_year(data);
+			}
 		});
 	});
 

@@ -70,7 +70,10 @@ function EntryController()
 {
 
 	this.fetchData= function(furl,date,callback){
-		$.ajax({
+		if(date==null){
+			callback(null);
+		}else{
+			$.ajax({
 				url: furl,
 				type: 'POST',
 				data: { user_id: $('#userId').val(),day: date},
@@ -83,7 +86,8 @@ function EntryController()
 					alert('error');
 					console.log(jqXHR.responseText+' :: '+jqXHR.statusText);
 				}
-		});
+			});
+		}
 	}
 	this.printData_day= function(data){
 		var items=[];
@@ -117,7 +121,7 @@ function EntryController()
 		var items=[];
 		var curday =data[0].entry_time.split(' ');
 		var curmonth = curday[0].split('.');
-		items.push("<h2 hidden='true' id='currentmonth'>"+curday[0]+"</h2>");
+		items.push("<h2 hidden='true' id='currentmonth'>"+curmonth[0]+'.1.'+curmonth[2]+"</h2>");
 		//alert(curmonth[0]);
 		items.push("<h2>"+month[curmonth[0]-1]+' '+curmonth[2]+"</h2>");
 		for (var i = 0; i < data.length; i++){
@@ -147,7 +151,7 @@ function EntryController()
 		var items=[];
 		var curday =data[0].entry_time.split(' ');
 		var curmonth = curday[0].split('.');
-		items.push("<h2 hidden='true' id='currentyear'>"+curday[0]+"</h2>");
+		items.push("<h2 hidden='true' id='currentyear'>"+'1.1.'+curmonth[2]+"</h2>");
 		//alert(curmonth[0]);
 		items.push("<h2>"+curmonth[2]+"</h2>");
 		for (var i = 0; i < data.length; i++){
