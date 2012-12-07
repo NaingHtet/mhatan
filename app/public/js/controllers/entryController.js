@@ -51,7 +51,6 @@ $('#btn-post').click(function(){
 			success: function(data){
 				var ec = new EntryController();
 				if(e_type =='T' || e_type =='D'){
-					alert(e_date);
 					var curday = e_date.split('-');
 					curday[2]++;
 					ec.fetchData('/prevdayentry',curday.join('-'),function(udata){

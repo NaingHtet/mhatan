@@ -325,7 +325,7 @@ module.exports = function(app) {
 			// if user is not logged-in redirect back to login page //
 			res.redirect('/');
 		} else {
-			AM.getDiaries( req.body.user_id, function(e, data) {
+			AM.getDiaries( req.session.user.user_id, function(e, data) {
 				res.render('diary', { locals: { title : 'Diary List', diaries : data } });
 			})
 		}
