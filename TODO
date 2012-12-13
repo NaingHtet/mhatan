@@ -1,13 +1,3 @@
 1. Cookie Management
 	Use database to store the login session instead of storing everything in a cookie.
 2. Password Encryption
-3. if you type in new account details and submit them, and the alert comes
-   down to tell you it worked, and then you press enter - instead of pressing
-   OK on the alert, it presses submit again, and a second alert comes down
-   behind the first one complaining of an invalid email. fix that
-4. fix deleting the earliest entry not redirecting the display to the next-
-   earliest entry
-5. Deleting the last year entry and then adding a new one causes one of the
-   daily entries to show up in the yearly entry display. when I was playing
-   with this error, the page started throwing "error" alerts continuously,
-   and then wouldn't display any entries from my user at all. Fix this?

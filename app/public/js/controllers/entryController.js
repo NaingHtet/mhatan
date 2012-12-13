@@ -1,3 +1,8 @@
+/* ENTRYCONTROLLER.JS
+ * Controller for entry page
+ */
+
+//Month Listing for translation
 var month=new Array();
 month[0]="January";
 month[1]="February";
@@ -12,8 +17,9 @@ month[9]="October";
 month[10]="November";
 month[11]="December";
 
+
+//Sends request to delete the entry
 function deleteEntry(entry_id){
-	//$('.modal-confirm').modal('hide');
 	$.ajax({
 		url: '/delentry',
 		type: 'POST',
@@ -23,13 +29,16 @@ function deleteEntry(entry_id){
 			updateAllTabs();
 		},
 		error: function(jqXHR){
+			alert('This is embarassing. We have encountered an error. Please restart the server and report the error.');
 			alert(jqXHR.responseText+' :: '+jqXHR.statusText);
 		}
 	});
 }
+
+//Refreshes the entries tab
 function updateAllTabs(){
 	var ec = new EntryController();
-
+	//Refreshes the daily entry tab
 	if($('#currentday').html()!= null){
 		var curday = $('#currentday').html().split('.');
 		if(curday[1]==31){
@@ -50,6 +59,7 @@ function updateAllTabs(){
 			}
 	 	});
 	}
+	//Refreshes the monthly entry tab
 	if($('#currentmonth').html()!=null){
 		var curmonth = $('#currentmonth').html().split('.');
 		if(curmonth[0]==12){
@@ -70,6 +80,7 @@ function updateAllTabs(){
 			}
 		});
 	}
+	//Refreshes the yearly entry tab
 	if($('#currentyear').html()!=null){
 		var curyear = $('#currentyear').html().split('.');
 		curyear[2]++;
@@ -128,22 +139,24 @@ $('#btn-post').click(function(){
 				if(e_type =='Y' || e_type == 'M'){
 					var curday = e_date.split('-');
 					curday[0]++;
-					ec.fetchData('/prevmonthentry',curday[0]+'-01-01',function(udata){
+					ec.fetchData('/prevyearentry',curday[0]+'-01-01',function(udata){
  						ec.printData_year(udata);
  						$('#tabs a:last').tab('show');
 					});
 				}
 			},
 			error: function(jqXHR){
+				alert('This is embarassing. We have encountered an error. Please restart the server and report the error.');
 				alert(jqXHR.responseText+' :: '+jqXHR.statusText);
 			}
 		});
 	}
 });
 
+//Displays Entries
 function EntryController()
 {
-
+	//Fetch the required entries
 	this.fetchData= function(furl,date,callback){
 		if(date==null){
 			callback(null);
@@ -153,17 +166,17 @@ function EntryController()
 				type: 'POST',
 				data: { user_id: $('#userId').val(),day: date},
 				dataType: "json",
-				//contentType: "application/json",
 				success: function(data){
 					callback(data);
 				},
 				error: function(jqXHR){
-					alert('error');
-					console.log(jqXHR.responseText+' :: '+jqXHR.statusText);
+					alert('This is embarassing. We have encountered an error. Please restart the server and report the error.');
+					alert(jqXHR.responseText+' :: '+jqXHR.statusText);
 				}
 			});
 		}
 	}
+	//Prints the data in daily entry tab
 	this.printData_day= function(data){
 		var items=[];
 		var curday =data[0].entry_time.split(' ');
@@ -186,18 +199,16 @@ function EntryController()
 			}
 			items.push('<p>'+timetitle+btn_html+'<p>'+data[i].text_content.replace(/\n\r?/g, '<br />') + pichtml+'</p><hr></p>');
 		}
-		//items.push('</div>');
 		$('#entries').html(items.join(''));
 		$('#entries').focus();
 	}
 
-
+	//Prints the data in monthly entry tab
 	this.printData_month= function(data){
 		var items=[];
 		var curday =data[0].entry_time.split(' ');
 		var curmonth = curday[0].split('.');
 		items.push("<h2 hidden='true' id='currentmonth'>"+curmonth[0]+'.1.'+curmonth[2]+"</h2>");
-		//alert(curmonth[0]);
 		items.push("<h2>"+month[curmonth[0]-1]+' '+curmonth[2]+"</h2>");
 		for (var i = 0; i < data.length; i++){
 			var time = data[i].entry_time.split(' ');
@@ -218,16 +229,16 @@ function EntryController()
 			}
 			items.push('<p>'+timetitle+btn_html+'<p>'+data[i].text_content.replace(/\n\r?/g, '<br />') + pichtml+'</p><hr></p>');
 		}
-		//items.push('</div>');
 		$('#entries_month').html(items.join(''));
 		$('#entries_month').focus();
 	}
+
+	//Prints the data in yearly entry tab
 	this.printData_year= function(data){
 		var items=[];
 		var curday =data[0].entry_time.split(' ');
 		var curmonth = curday[0].split('.');
 		items.push("<h2 hidden='true' id='currentyear'>"+'1.1.'+curmonth[2]+"</h2>");
-		//alert(curmonth[0]);
 		items.push("<h2>"+curmonth[2]+"</h2>");
 		for (var i = 0; i < data.length; i++){
 			var time = data[i].entry_time.split(' ');
@@ -248,7 +259,6 @@ function EntryController()
 			}
 			items.push('<p>'+timetitle+btn_html+'<p>'+data[i].text_content.replace(/\n\r?/g, '<br />') + pichtml+'</p><hr></p>');
 		}
-		//items.push('</div>');
 		$('#entries_year').html(items.join(''));
 		$('#entries_year').focus();
 	}

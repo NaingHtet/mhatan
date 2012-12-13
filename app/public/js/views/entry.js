@@ -1,3 +1,7 @@
+/*
+ *
+ */
+
 $(document).ready(function(){
 	var ec = new EntryController();
 	var pc = new PicController();
@@ -47,7 +51,6 @@ $(document).ready(function(){
 
 	$('#btn-pic').click(function(){
 		$('#add-pictures').modal("show");
-		//$('#add-pictures').show();
 	});
 
 	$('#add-btn').click(function(){
@@ -112,12 +115,9 @@ $(document).ready(function(){
 			}
 		});
 	});
-
-
 })
 
 function changeType(entry_type){
-	//$('.modal-confirm').modal('hide');
 
 	if(entry_type!='D'){
 		$('#entry_date-tf').hide('1');
