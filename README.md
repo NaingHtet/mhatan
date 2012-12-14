@@ -13,6 +13,6 @@ For further information, please contact htetn@lafayette.edu
 
 TO RUN
 -------
-1. Run dbssh.sh. Provide username and password for tomcat.cs.lafayette.edu.
+1. Run dbssh.sh. Provide password for tomcat.cs.lafayette.edu. The script file has been configured for user "xiag". To log in as another user, edit dbssh.sh and replace "xiag" with username.
 2. In terminal, type "node app.js".
 3. Open localhost:3000 in browser. Use Google Chrome as we haven't added support for other browers.(Some functions might be missing if opened with other browsers)
