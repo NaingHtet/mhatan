@@ -1,3 +1,8 @@
+/* PICCONTROLLER.JS
+ * Controller for adding and deleting pictures
+ */
+
+
 var pics =[];
 
 function deletePic(pic_id){
@@ -31,23 +36,4 @@ function PicController()
 			pics.push({pic_id:picid ,pic_url:url});
 		}
 	}
-
-		//items.push('</div>');
-
-	// this.fetchData= function(callback){
-	// 	$.ajax({
-	// 			url: '/entry',
-	// 			type: 'POST',
-	// 			data: { user_id: $('#userId').val()},
-	// 			dataType: "json",
-	// 			//contentType: "application/json",
-	// 			success: function(data){
-	// 				callback(data);
-	// 			},
-	// 			error: function(jqXHR){
-	// 				alert('error');
-	// 				console.log(jqXHR.responseText+' :: '+jqXHR.statusText);
-	// 			}
-	// 	});
-	// }
 }

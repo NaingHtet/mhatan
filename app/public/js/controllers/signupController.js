@@ -1,4 +1,6 @@
-
+/* SIGNUPCONTROLLER.JS
+ * Controller for the signup page
+ */
 function SignupController()
 {
 // redirect to homepage when cancel button is clicked //

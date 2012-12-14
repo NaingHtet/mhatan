@@ -1,4 +1,6 @@
-
+/* SIGNUP.JS
+ * Handles javascript for signup page
+ */
 $(document).ready(function(){
 	
 	var av = new AccountValidator();

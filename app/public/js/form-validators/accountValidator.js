@@ -1,4 +1,6 @@
-
+/* ACCOUNTVALIDATOR.JS
+ * Validator for Account Control
+ */
 function AccountValidator(){
 
 // build array maps of the form inputs & control groups //

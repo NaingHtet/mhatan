@@ -1,4 +1,6 @@
-
+/* LOGIN.JS
+ * Handles javascript for login page
+ */
 $(document).ready(function(){
 	
 	var lv = new LoginValidator();

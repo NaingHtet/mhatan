@@ -1,4 +1,6 @@
-
+/* HOMECONTROLLER.JS
+ * Controller for the home page
+ */
 function HomeController()
 {
 

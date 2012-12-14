@@ -1,4 +1,6 @@
-
+/* CONFIG.JS
+ * Configuration file
+ */
 module.exports = function(app, exp) {
 
 	app.configure(function(){

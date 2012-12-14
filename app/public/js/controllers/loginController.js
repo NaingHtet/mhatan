@@ -1,4 +1,6 @@
-
+/* LOGINCONGROLLER.JS
+ * Controller for login page
+ */
 function LoginController()
 {
 

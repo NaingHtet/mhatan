@@ -1,10 +1,11 @@
-/*
- *
+/* ENTRY.JS
+ * Handles javascript for entries
  */
-
 $(document).ready(function(){
 	var ec = new EntryController();
 	var pc = new PicController();
+
+	//Fetch data for daily entry tab and display
 	ec.fetchData('/prevdayentry','tomorrow',function(data){
 		if(data == ''){
 			ec.fetchData('/nextdayentry','yesterday',function(data){
@@ -18,6 +19,8 @@ $(document).ready(function(){
 			ec.printData_day(data);
 		}
 	});
+
+	//Fetch data for monthly entry tab and display
 	ec.fetchData('/prevmonthentry','today',function(data){
 		if(data ==''){
 			ec.fetchData('/nextmonthentry','today',function(data){
@@ -31,6 +34,8 @@ $(document).ready(function(){
 			ec.printData_month(data);
 		}
 	});
+
+	//Fetch data for yearly entry tab and display
 	ec.fetchData('/prevyearentry','today',function(data){
 		if(data == ''){
 			ec.fetchData('/nextyearentry','today',function(data){
@@ -45,6 +50,7 @@ $(document).ready(function(){
 		}
 	});
 
+//Setting up buttons and linking them to their functions
 	$('input[name="entry_type"]:radio').change(function(){
 		changeType($('input[name="entry_type"]:checked').val());
 	});
@@ -117,6 +123,7 @@ $(document).ready(function(){
 	});
 })
 
+//Change the type of the new post
 function changeType(entry_type){
 
 	if(entry_type!='D'){

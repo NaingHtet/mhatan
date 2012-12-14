@@ -1,9 +1,12 @@
-
+/* HOME.JS
+ * Handles javascript for home page
+ */
 $(document).ready(function(){
 
 	var hc = new HomeController();
 	var av = new AccountValidator();
 	
+	//Validates the form before submission
 	$('#account-form').ajaxForm({
 		beforeSubmit : function(formData, jqForm, options){
 			if (av.validateForm() == false){
