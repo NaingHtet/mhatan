@@ -2,18 +2,18 @@ body {
   margin: 0;
   padding: 0;
   height: 100%;
-}
-li {
-  float: left;
+  background: -moz-linear-gradient(top, #1e5799 0%, #a5c9e5 100%);
+  background: -webkit-linear-gradient(top, #1e5799 0%, #a5c9e5 100%);
+  background: -webkit-linear-gradient(top, #1e5799 0%, #a5c9e5 100%);
+  background: -o-linear-gradient(top, #1e5799 0%, #a5c9e5 100%);
+  background: -ms-linear-gradient(top, #1e5799 0%, #a5c9e5 100%);
+  background: linear-gradient(top, #1e5799 0%, #a5c9e5 100%);
 }
 a {
   line-height: 30px;
   display: block;
   font-weight: bold;
   text-align: center;
-}
-a:hover {
-  background-color: #7a991a;
 }
 #radio_btns {
   font-weight: small;
@@ -25,20 +25,30 @@ a:hover {
 #navbar {
   min-width: 500px;
 }
+#navbar h2 {
+  float: left;
+  height: 10px;
+  padding: 1px 10px;
+}
 #navbar ul {
   float: right;
 }
 #navbar img {
-  width: 100px;
+  margin-top: 5px;
+  height: 40px;
   float: left;
 }
 #greeting-container {
+  background: url("/img/book.png");
+  background-repeat: no-repeat;
+  background-size: 930px auto;
   width: 1000px;
-  margin: 120px auto auto auto;
+  height: 620px;
+  margin: 20px auto auto auto;
 }
 #greeting-container #image {
   width: 250px;
-  margin: 20px 120px 20px 120px;
+  margin: 100px 120px 20px 120px;
   float: left;
 }
 #greeting-container #image h3 {
@@ -48,8 +58,15 @@ a:hover {
   margin-top: 40px;
 }
 #login-container {
+  margin-top: 80px;
+  margin-left: 30px;
   float: left;
   width: 340px;
+}
+#login-container h1 {
+  color: #13368d;
+  height: 70px;
+  padding: 20px 20px 0 0;
 }
 #login-container label {
   margin: 15px 0 5px 5px;
@@ -68,8 +85,7 @@ a:hover {
   margin-top: 10px;
 }
 #login-container #create-account {
-  float: right;
-  margin-right: 13px;
+  float: left;
 }
 #login-container #forgot-password {
   float: left;
@@ -77,44 +93,46 @@ a:hover {
 }
 #entry-form-container {
   width: 610px;
-  margin: 10px auto auto;
+  margin: auto auto;
 }
 #entry-form-container label {
-  margin: 15px 0 5px 5px;
+  margin: 0 0 5px 5px;
 }
 #entry-form-container button {
-  width: 120px;
+  width: 150px;
   padding: 6px 10px 6px 10px;
   float: right;
   margin-top: 10px;
   margin-left: 10px;
 }
-#entry-form-container #entries h2,
+#entry-form-container #entries_day,
+#entry-form-container #entries_month,
+#entry-form-container #entries_year {
+  background-color: #fff;
+}
+#entry-form-container #entries_day h2,
 #entry-form-container #entries_month h2,
 #entry-form-container #entries_year h2 {
   text-align: center;
 }
-#entry-form-container #entries h3,
+#entry-form-container #entries_day h3,
 #entry-form-container #entries_month h3,
 #entry-form-container #entries_year h3 {
   text-align: center;
 }
-#entry-form-container #entries p,
+#entry-form-container #entries_day p,
 #entry-form-container #entries_month p,
 #entry-form-container #entries_year p {
   word-wrap: break-word;
   width: 610px;
   text-indent: 65px;
 }
-#entry-form-container #entries button,
+#entry-form-container #entries_day button,
 #entry-form-container #entries_month button,
 #entry-form-container #entries_year button {
   width: 15px;
   padding: 0 0 0 0;
   margin-top: 0px;
-}
-#entry-form-container #entriesmode {
-  width: 660px;
 }
 #entry-form-container #entry_date-tf {
   width: 120px;
@@ -132,7 +150,7 @@ a:hover {
   width: 70px;
 }
 #entry-form-container #entry_title-tf {
-  width: 350px;
+  width: 150px;
   float: right;
   text-align: left;
   font-weight: bold;

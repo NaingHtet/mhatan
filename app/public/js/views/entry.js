@@ -4,7 +4,7 @@
 $(document).ready(function(){
 	var ec = new EntryController();
 	var pc = new PicController();
-
+	changeType('T');
 	//Fetch data for daily entry tab and display
 	ec.fetchData('/prevdayentry','tomorrow',function(data){
 		if(data == ''){
@@ -67,7 +67,7 @@ $(document).ready(function(){
 	$('#prevday').click(function(){
 		ec.fetchData('/prevdayentry',$('#currentday').html(),function(data){
 			if(!data){
-				$('#entries').html('No entries. Please write some entries first.');
+				$('#entries_day').html('No entries. Please write some entries first.');
 			}else{
 				ec.printData_day(data);
 			}

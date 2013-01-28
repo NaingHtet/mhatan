@@ -14,14 +14,22 @@ input(type='hidden', value= user.user_id)#userId
 				label.control-label(for='email-tf') Email
 				.controls
 					input#email-tf.input-xlarge(type='text', name='email', value= user.email)
+					p Enter your email address used for login.
 			#user-cg.control-group
 				label.control-label(for='user-tf') Pen Name
 				.controls
 					input#user-tf.input-xlarge.disabled(type='text', name='user', value= user.user)
+					p Input your username for Mhatan.
 			#pass-cg.control-group
 				label.control-label(for='pass-tf') Password
 				.controls
 					input#pass-tf.input-xlarge(type='password', name='pass', value='')
+					p Choose a secure password.
+			#passconf-cg.control-group
+				label.control-label(for='passconf-tf') Password Confirmation
+				.controls
+					input#passconf-tf.input-xlarge(type='password', name='passconf', value='')
+					p Type your password again.
 			.form-actions
 				button(type='button')#account-form-btn1.btn
 				button(type='submit')#account-form-btn2.btn

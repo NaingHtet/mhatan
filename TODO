@@ -1,3 +1,23 @@
-1. Cookie Management
+1. Cookie Management (Re-enable Remember me)
 	Use database to store the login session instead of storing everything in a cookie.
 2. Password Encryption
+3. Logo Redesign
+4. Diary Management
+5. Redesign of journal style
+6. Quick Posting
+7. Latest ver bootstrap
+8. Redesign of login page
+9. Google page speed up
+10. Browser support
+11. Title icon
+12. html and css rewrite
+13. security measures(first thing is to not allow users to fetch anyone's post)
+
+Ideas
+1. Mail to note
+2. Reminders/Notifications
+3. Voice/Video Entries
+
+Misc.
+DB - Diary name unique
+DB - add diary_id column to entries

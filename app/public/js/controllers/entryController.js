@@ -115,7 +115,8 @@ $('#btn-post').click(function(){
 					entry_time:e_time,
 					entry_text:$('#entry_text-tf').val(),
 					entry_type:e_type,
-					entry_pics:pics},
+					entry_pics:pics,
+					diary_id : $('#diaryId').val()},
 			success: function(data){
 				var ec = new EntryController();
 				if(e_type =='T' || e_type =='D'){
@@ -164,7 +165,7 @@ function EntryController()
 			$.ajax({
 				url: furl,
 				type: 'POST',
-				data: { user_id: $('#userId').val(),day: date},
+				data: { user_id: $('#userId').val(),day: date,diary_id: $('#diaryId').val()},
 				dataType: "json",
 				success: function(data){
 					callback(data);
@@ -185,7 +186,7 @@ function EntryController()
 			var time = data[i].entry_time.split(' ');
 			var btn_html = '<button class="btn btn-mini" onclick="deleteEntry('+data[i].entry_id+')"><i class="icon-remove"></i></button>';
 			var title = (data[i].title==null) ?'':data[i].title;
-			var timetitle = (data[i].entry_type=='D')?'<h3>'+title+'</h3>':'<h4>'+time[1]+'  :  '+title+'</h4>';
+			var timetitle = (data[i].entry_type=='D')?'<h4>'+title+'</h4>':'<h5>'+time[1]+'  :  '+title+'</h5>';
 			var pichtml = '';
 			if(data[i].pic_list != null){
 				var pics = data[i].pic_list.split(',');
@@ -199,8 +200,8 @@ function EntryController()
 			}
 			items.push('<p>'+timetitle+btn_html+'<p>'+data[i].text_content.replace(/\n\r?/g, '<br />') + pichtml+'</p><hr></p>');
 		}
-		$('#entries').html(items.join(''));
-		$('#entries').focus();
+		$('#entries_day').html(items.join(''));
+		$('#entries_day').focus();
 	}
 
 	//Prints the data in monthly entry tab

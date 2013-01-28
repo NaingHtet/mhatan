@@ -1,12 +1,12 @@
 include navbar
 div#greeting-container
     div#image
-        img(src="/img/mhatan_black.png")
+        img(src="/img/mhatan_writing.png")
         h3 read.write.share.
         p.well Mhatan is still in beta. Please report bugs and suggestions to htetn@lafayette.edu. Thank you.
     #login-container
-        form( method="post")#login-form.well.span4
-            h1= title
+        h1 Login
+        form( method="post")#login-form
             p.subheading Please Login To Your Account
             label Email 
             input(type="text", name="email", id='user-tf').span4.required
@@ -21,7 +21,7 @@ div#greeting-container
             hr
             div.btm-links
                 a(href='/signup')#create-account Create An Account
-    
+div.clear-fix
 include modals/alert
 
 script(src='/vendor/jquery.min.js')
