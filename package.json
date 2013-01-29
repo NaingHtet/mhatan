@@ -8,7 +8,8 @@
 		"jade": ">= 0.27.x",
 		"emailjs": ">= 0.3.x",
 		"pg": ">= 0.8.x",
-		"connect": "2.x.x"
+		"connect": "2.x.x",
+		"bcrypt": "0.5.x"
 		
 	},
 	"engines": {
