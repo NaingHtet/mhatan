@@ -25,17 +25,12 @@ a {
 #navbar {
   min-width: 500px;
 }
-#navbar h2 {
-  float: left;
-  height: 10px;
-  padding: 1px 10px;
-}
 #navbar ul {
   float: right;
 }
 #navbar img {
-  margin-top: 5px;
-  height: 40px;
+  margin-top: 10px;
+  height: 30px;
   float: left;
 }
 #greeting-container {
