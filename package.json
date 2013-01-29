@@ -7,8 +7,9 @@
 		"stylus": ">= 0.29.x",
 		"jade": ">= 0.27.x",
 		"emailjs": ">= 0.3.x",
-		"pg": ">= 0.8.x"
-
+		"pg": ">= 0.8.x",
+		"connect": "2.x.x"
+		
 	},
 	"engines": {
 		"node": "0.8.x",
