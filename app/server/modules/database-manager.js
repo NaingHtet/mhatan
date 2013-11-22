@@ -3,7 +3,6 @@
  */
 
 var pg = require('pg');
-var bcrypt = require('bcrypt');
 
 //Our database address and specifications
 var conString = "postgres://postgres:nmh12345@127.0.0.1/mhatandb";

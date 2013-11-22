@@ -10,7 +10,6 @@
 		"pg": ">= 0.8.x",
 		"connect": "2.x.x",
 		"bcrypt": "0.5.x"
-		
 	},
 	"engines": {
 		"node": "0.8.x",
